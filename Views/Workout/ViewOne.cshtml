@@ -1,0 +1,54 @@
+@model Workout
+<div class="container mt-5 text-center">
+    <h2 class="display-3">@Model.Title</h2>
+    <p class="fst-italic fs-5 mb-0">By: @Model.Author.FirstName</p>
+    <p class="mb-5 fst-italic">last updated:
+        @{
+            var month = DateTime.Now.Month- Model.UpdatedAt.Month;
+            var day = (int)((DateTime.Now - Model.UpdatedAt).TotalDays);
+            var hours = (int)((DateTime.Now - Model.UpdatedAt).TotalHours);
+            var minutes = (int)((DateTime.Now - Model.UpdatedAt).TotalMinutes);
+            if(month > 0){
+                <span>@month month(s)</span>
+            }else if(day > 1){
+                <span>@day day(s)</span>
+            }else if(hours > 0){
+                <span>@hours hour(s)</span>
+            }else{
+                <span>@minutes minute(s)</span>
+            }
+        }
+        ago    
+    </p>
+    <p class="fs-5">@Model.Body</p>
+    
+    @if(Context.Session.GetInt32("UserId") == Model.UserId){
+        <div class="my-5 d-flex justify-content-around">
+            <form asp-action="Delete" asp-controller="Workout" asp-route-workoutId="@Model.WorkoutId" method="Post">
+                <button class="btn btn-danger btn-lg">Delete</button>
+            </form>
+            <a asp-action="Edit" asp-controller="Workout" asp-route-workoutId="@Model.WorkoutId" class="btn btn-success btn-lg mb-3">Edit</a>
+        </div>
+    }else{
+        <form asp-action="Favorite" asp-controller="Workout" asp-route-workoutId="@Model.WorkoutId" method="Post">
+            @{
+            bool alreadyFav = Model.UserFavorites.Any(f => f.UserId == Context.Session.GetInt32("UserId"));
+            if(alreadyFav){
+                <button class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                    </svg>
+                </button>
+            }else{
+                <button class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                    </svg>
+                </button>
+            }
+            }
+        </form>
+    }
+</div>
+
+

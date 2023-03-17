@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Fitness App</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FitnessApp.styles.css" asp-append-version="true" />
+</head>
+<body class="rounded" style="background-color: #d8bbc3;">
+    @if(Context.Session.GetInt32("UserId") is not null)
+    {
+        <section>
+        <nav class="navbar navbar-expand-lg py-3 border border-bottom border-dark">
+            <div class="container">
+                <a href="/workout/all" class="navbar-brand">FitShare</a>
+                <button class="navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="/workout/all" class="nav-link">Explore New Workouts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/workout/my-workouts" class="nav-link">Your Workouts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/workout/new" class="nav-link">Create a Workout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/logout" class="nav-link">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+    }
+            @RenderBody()
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

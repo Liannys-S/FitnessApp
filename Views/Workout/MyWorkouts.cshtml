@@ -1,0 +1,32 @@
+@model MyViewModel
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2 class="display-5">Favorited Workouts</h2>
+            <div class="list-group mt-3">
+                @if(Model.myFavorites.Count == 0)
+                {
+                    <p>Explore workouts and add them to your list <a href="/workout/all">here</a>!</p>
+                }
+                @foreach (var myFavorite in Model.myFavorites)
+                {
+                    <a class="list-group-item bg-transparent border-dark" href="/workout/@myFavorite.WorkoutId">@myFavorite.Workout.Title</a>
+                }
+            </div>
+        </div>
+        <div class="col-lg-6 mt-5 mt-md-0">
+            <h2 class="display-5">Created Workouts</h2>
+            <div class="list-group mt-3">
+                @if(Model.myWorkouts.Count == 0)
+                {
+                    <p>You have no created workouts, click <a href="/workout/new">here</a> to create one</p>
+                }
+                @foreach (var myWorkout in Model.myWorkouts)
+                {
+                    <a class="list-group-item bg-transparent border-dark" href="/workout/@myWorkout.WorkoutId">@myWorkout.Title</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

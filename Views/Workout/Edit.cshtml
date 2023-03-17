@@ -1,0 +1,20 @@
+@model Workout
+<div class="container text-center mt-5">
+    <h1 class="display-3 mb-5">Edit your workout</h1>
+        <form asp-action="Update" asp-controller="Workout" method="Post" asp-route-workoutId="@Model.WorkoutId" class="row justify-content-center fs-5">
+            <div class="mb-3 col-md-4 ">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control"  value="@Model.Title">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-md-9">
+                <label asp-for="Body" class="form-label"></label>
+                <textarea asp-for="Body" class="form-control" rows="8" value="@Model.Body"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            <div>
+                
+                <button class="btn btn-primary btn-lg mt-3">Update</button>
+            </div>
+        </form>
+</div>
